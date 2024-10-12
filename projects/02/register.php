@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sms = $_POST['sms'] == 'on' ? 1 : 0;
     $subscribe = $_POST['subscribe'] == 'on' ? 1 : 0;
     $activation_code = uniqid(); // Generate a unique id
+    $user_bio = htmlspecialchars($_POST['user_bio']); // Extract and sanitize user bio
 
-    // Check if the email is unique
-    $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
-    $stmt->execute([$email]);
-    $userExists = $stmt->fetch();
+    //Email is unique, proceed with inserting the new user record
+    $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`,`activation_code`, `user_bio`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code, $user_bio]);
 
     if ($userExists) {
         // Email already exists, prompt the user to choose another
@@ -131,6 +131,13 @@ if (isset($_GET['code'])) {
             </div>
             <div class="control">
                 <button type="reset" class="button is-link is-light">Reset</button>
+            </div>
+        </div>
+         <!-- Bio -->
+        <div class="field">
+            <label class="label">Bio</label>
+            <div class="control">
+                <textarea class="textarea" name="user_bio" placeholder="Tell us about yourself"></textarea>
             </div>
         </div>
     </form>
