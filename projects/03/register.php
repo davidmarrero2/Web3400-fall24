@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subscribe = $_POST['subscribe'] == 'on' ? 1 : 0;
     $activation_code = uniqid(); // Generate a unique id
     $user_bio = htmlspecialchars($_POST['user_bio']); // Extract and sanitize user bio
+    // Check if the email is unique
+    $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
+    $stmt->execute([$email]);
+    $userExists = $stmt->fetch();
 
     //Email is unique, proceed with inserting the new user record
     $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`,`activation_code`, `user_bio`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
