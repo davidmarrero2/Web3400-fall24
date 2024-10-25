@@ -41,6 +41,9 @@
                         <a href="users_manage.php" class="navbar-item">
                             Manage Users
                         </a>
+                        <a href="articles.php" class="navbar-item">
+                        Manage Articles
+                        </a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -73,18 +76,23 @@
         
         <!-- END MAIN NAV -->
         <section class="block">&nbsp;<!--only for spacing purposes--></section>
-        
         <?php if ($_SERVER['PHP_SELF'] == '/index.php') : ?>
        
         <!-- BEGIN HERO -->
-        <section class="hero is-link">
+        <section class="hero is-info">
             <div class="hero-body">
-                <p class="title">
-                    Hero title
-                </p>
-                <p class="subtitle">
-                    Hero subtitle
-                </p>
+            <p class="title">
+                Find peace through words
+            </p>
+            <p class="subtitle">
+                Wanting peace? Find them throught the words of others.
+            </p>
+            <a href="contact.php" class="button is-medium is-info is-light is-rounded">
+                <span class="icon is-large">
+                <i class="fab fa-2x fa-pagelines"></i>
+                </span>
+                <span>Share your thoughts...</span>
+            </a>
             </div>
         </section>
         <!-- END HERO -->

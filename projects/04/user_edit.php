@@ -18,9 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve form data
         $full_name = $_POST['full_name'];
         $phone = $_POST['phone'];
+        $role = $_POST['role'];
 
         // Update user record in the database
-        $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ?WHERE `id` = ?");
+        $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ? WHERE `id` = ?");
         $stmt->execute([$full_name, $phone, $_SESSION['user_id']]);
 
         // Redirect user to profile page after successful update
