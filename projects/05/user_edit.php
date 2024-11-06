@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update user record in the database
         $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ? WHERE `id` = ?");
-        $stmt->execute([$full_name, $phone, $_SESSION['user_id']]);
+        $stmt->execute([$full_name, $phone, $_GET['id']]);
 
         // Redirect user to profile page after successful update
         header('Location: users_manage.php');
@@ -39,7 +39,7 @@ the user id from the query string (ex. $_GET['id'])*/
 try {
     // Get user info from the database
     $id = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
-    $id->execute([$_SESSION['user_id']]);
+    $id->execute([$_GET['id']]);
     $user = $id->fetch();
 } catch (PDOException $e) {
     // Handle any database errors (optional)

@@ -74,7 +74,6 @@ if (isset($_GET['code'])) {
     }
 }
 ?>
-
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
