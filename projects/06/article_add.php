@@ -11,8 +11,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 }
 /* Step 3: Implement form handling logic to insert the new article into the database. 
    You must update the SQL INSERT statement, and when the record is successfully created, 
-   redirect back to the `articles.php` page with the message "The article was successfully added."
-*/
+   redirect back to the `articles.php` page with the message "The article was successfully added."*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Extract and sanitize the form data
     $title = htmlspecialchars($_POST['title']);
