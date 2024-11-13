@@ -1,6 +1,7 @@
 <?php
 // Include config.php file
 include 'config.php';
+
 // Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     // Redirect user to login page or display an error message
@@ -8,6 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
 // Check if the $_GET['id'] exists; if it does, get the ticket record from the database and store it in the associative array $ticket. If a ticket with that ID does not exist, display the message "A ticket with that ID did not exist."
 if (isset($_GET['id'])) {
     // Get ticket info from the database
