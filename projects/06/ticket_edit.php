@@ -9,6 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
+
 // Check if the update form was submitted. If so, UPDATE the ticket details.
 if (isset($_GET['id'])) {
     $stmt = $pdo->prepare("SELECT * FROM tickets WHERE id = ?");
