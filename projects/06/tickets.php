@@ -1,6 +1,6 @@
 <?php
 // Include config.php file
-include 'config.php';
+include 'config.php'; 
 
 // Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 // Prepared statement that retrieves all the tickets in descending order by creation date from the tickets table
-$stmt = $pdo->prepare("SELECT * FROM tickets ORDER BY created_at DESC");
+$stmt = $pdo->prepare('SELECT * from `tickets` ORDER BY `created_at` DESC');
 
 // Execute the query
 $stmt->execute();
@@ -21,8 +21,9 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Check if the query returned any rows. If not, display the message: "There are no tickets in the database."
 if (!$tickets) {
-    echo "There are no tickets in the database.";
+    $_SESSION['messages'][] = "There are no tickets in the database.";
 }
+
 ?>
 
 <?php include 'templates/head.php'; ?>

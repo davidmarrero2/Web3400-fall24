@@ -1,6 +1,6 @@
 <?php
 // Include config.php file
-include 'config.php';
+include 'config.php'; 
 
 // Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
@@ -11,17 +11,27 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 // Check if the update form was submitted. If so, UPDATE the ticket details.
-if (isset($_GET['id'])) {
-    $stmt = $pdo->prepare("SELECT * FROM tickets WHERE id = ?");
-    $stmt->execute([$_GET['id']]);
-    $ticket = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = htmlspecialchars($_POST['title']);
+    $description = htmlspecialchars($_POST['description']);
+    $priority = htmlspecialchars($_POST['priority']);
+
+    // Update ticket information
+    $insertStmt = $pdo->prepare("UPDATE `tickets` SET `title`= ?, `description`= ?, `priority`=?, `updated_at` = NOW() WHERE `id` = ?");
+    $insertStmt->execute([$title, $description, $priority, $_GET['id']]);
+
+    $_SESSION['messages'][] = "Ticket was successfully edited.";
+    header('Location: tickets.php');
+    exit;
 }
 
 // Else, it's an initial page request; fetch the ticket record from the database where the ticket = $_GET['id']
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("UPDATE tickets SET title = ?, description = ?, priority = ? WHERE id = ?");
-    $stmt->execute([$_POST['title'], $_POST['description'], $_POST['priority'], $_GET['id']]);
-    header('Location: tickets.php?msg=Ticket updated successfully.');
+if (isset($_GET['id'])) {
+
+    // Prepare and execute the SELECT query to fetch the user data
+    $stmt = $pdo->prepare("SELECT * FROM `tickets` WHERE `id` = ?");
+    $stmt->execute([$_GET['id']]);
+    $ticket = $stmt->fetch();
 }
 ?>
 
